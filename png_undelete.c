@@ -41,7 +41,7 @@ long long find_signature(FILE* f, unsigned int* sig, int sig_length) {
   if (memcmp(sig, g_eof_sig, SIG_BYTE_SZ) == 0)
     looking_for_eof_sig = 1;
 
-  while((r = fread(&buf,1,bufsize,f)) == bufsize) { 
+  while((r = fread(&buf,1,bufsize,f)) != 0) { 
 
     for (int i=0;i<50;i++)
       printf("\b");
@@ -74,7 +74,6 @@ long long find_signature(FILE* f, unsigned int* sig, int sig_length) {
       index = 0;
     }
   }
-
   return -1;
 }
 
@@ -152,6 +151,8 @@ int main(int argc, char* argv[]) {
 
     file_end = find_signature(f, g_eof_sig, 8);
 
+    printf("END: %lld", file_end);
+
     if (file_end <= 0)
       continue;
     
@@ -160,7 +161,7 @@ int main(int argc, char* argv[]) {
     get_file_slice(file_start, file_end, f);
 
     if (feof(f) != 0)  {
-      printf("END OF FILE!\n");
+      printf("END OF FILE\n");
       break;
     }
   }
