@@ -47,8 +47,8 @@ long long find_signature(FILE* f, unsigned int* sig, int sig_length) {
       printf("\b");
     
     printf("read: (%.3fG) writ: (%.3fG)", to_GB(ftell(f)), to_GB(bytes_written));
+    fflush(stdout);
 
-    //fflush(stdout);
     c += r;
 
     if (looking_for_eof_sig == 1 && c >= MAX_FILE_SIZE ) {
